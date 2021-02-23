@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.BeanReference;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.GeneratedValue;
 import java.util.Optional;
 
 @Service
