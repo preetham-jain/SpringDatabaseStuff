@@ -10,5 +10,6 @@ import javax.websocket.server.ServerEndpoint;
 public class EmployeeRequestDTO {
     private Long id;
     private String name;
-    private String departmentName;
+    private String code;
+    private DepartmentRequestDTO department;
 }

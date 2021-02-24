@@ -1,24 +1,21 @@
 package com.example.springDataExample.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
-public class Employee {
+@Data
+public class Department {
     @Id
     @GenericGenerator(name = "employee_id_seq", strategy = "increment")
     @GeneratedValue(generator = "employee_id_seq", strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private String code;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
-    private Department department;
+    @JoinColumn(referencedColumnName = "id", name = "department_id")
+    @OneToMany
+    List<Employee> employeeList;
 }
