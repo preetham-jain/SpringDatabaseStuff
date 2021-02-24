@@ -10,4 +10,6 @@ public interface DepartmentService {
     Department getDepartmentById(Long id);
 
     DepartmentResponseDTO updateDepartment(Long id, DepartmentRequestDTO departmentRequestDTO);
+
+    String getDepartmentWithMaxSum();
 }

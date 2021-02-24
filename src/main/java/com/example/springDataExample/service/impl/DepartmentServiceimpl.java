@@ -11,9 +11,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.BeanReference;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentServiceimpl implements DepartmentService {
@@ -61,5 +63,34 @@ public class DepartmentServiceimpl implements DepartmentService {
         DepartmentResponseDTO responseDTO = new DepartmentResponseDTO();
         BeanUtils.copyProperties(savedDepartment, responseDTO);
         return responseDTO;
+    }
+
+    @Override
+    public String getDepartmentWithMaxSum() {
+        List<Department> departmentList = departmentRepository.getAllDepartments();
+
+        int max = 0;
+        Long idWithMaxYears = null;
+        for (Department department: departmentList) {
+            List<Employee> employeeList = department.getEmployeeList();
+
+            int sum = 0;
+            for (Employee employee: employeeList) {
+                sum += employee.getYearsOfExperience();
+            }
+
+            if (sum > max) {
+                idWithMaxYears = department.getId();
+                max = sum;
+            }
+        }
+
+        Optional<Department> department = departmentRepository.findById(idWithMaxYears);
+        if(department.isPresent()) {
+            String response = department.get().getName() + " with sum of: " + max;
+            return response;
+        }else {
+            return null;
+        }
     }
 }

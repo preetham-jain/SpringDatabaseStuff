@@ -38,4 +38,14 @@ public class EmplyoyeeController {
     public List<EmployeeResponseDTO> getEmployeeList(@PathVariable("id") Long departmentId) {
         return employeeService.getEmployeeListByDepartment(departmentId);
     }
+
+    @GetMapping(path = "/mostExperienced")
+    public EmployeeResponseDTO getMostExperiencedEmployee() {
+        return employeeService.getMostExperiencedEmployee();
+    }
+
+    @GetMapping(path = "/mostExperienced/{departmentId}")
+    public EmployeeResponseDTO getMostExperiencedEmployeeFromDepartmentId(@PathVariable("departmentId") Long departmentId) {
+        return employeeService.getMostExperiencedEmployeeFromDepartmentId(departmentId);
+    }
 }

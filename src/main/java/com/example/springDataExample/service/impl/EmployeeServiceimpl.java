@@ -126,6 +126,7 @@ public class EmployeeServiceimpl implements EmployeeService {
 //        List<Employee> employeeList = employeeRepository.getEmployeeListByDepartmentId(departmentId);
 
         List<Employee> employeeList = employeeRepository.getEmployeeListByNativeQuery(departmentId);
+
         List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
         for (Employee employee: employeeList) {
             EmployeeResponseDTO responseDTO = new EmployeeResponseDTO();
@@ -134,5 +135,41 @@ public class EmployeeServiceimpl implements EmployeeService {
             employeeResponseDTOList.add(responseDTO);
         }
         return employeeResponseDTOList;
+    }
+
+    @Override
+    public EmployeeResponseDTO getMostExperiencedEmployee() {
+        List<Employee> employeeList = employeeRepository.getAllEmployees();
+
+        return getMaxEmployeeFromList(employeeList);
+    }
+
+    @Override
+    public EmployeeResponseDTO getMostExperiencedEmployeeFromDepartmentId(Long departmentId) {
+        List<Employee> employeeList = employeeRepository.getEmployeeListByNativeQuery(departmentId);
+
+        return getMaxEmployeeFromList(employeeList);
+    }
+
+    public EmployeeResponseDTO getMaxEmployeeFromList(List<Employee> employeeList) {
+        int max = -1;
+        Long idWithMaxYears = null;
+
+        for (Employee employee: employeeList) {
+            if(employee.getYearsOfExperience() > max) {
+                idWithMaxYears = employee.getId();
+                max = employee.getYearsOfExperience();
+            }
+        }
+
+        EmployeeResponseDTO responseDTO = new EmployeeResponseDTO();
+        if(idWithMaxYears != null) {
+            Optional<Employee> maxYearsEmployee = employeeRepository.findById(idWithMaxYears);
+            BeanUtils.copyProperties(maxYearsEmployee.get(), responseDTO);
+            responseDTO.setDepartmentFromEntity(maxYearsEmployee.get().getDepartment());
+            return responseDTO;
+        }else {
+            return null;
+        }
     }
 }

@@ -11,5 +11,6 @@ public class EmployeeRequestDTO {
     private Long id;
     private String name;
     private String code;
+    private int yearsOfExperience;
     private DepartmentRequestDTO department;
 }

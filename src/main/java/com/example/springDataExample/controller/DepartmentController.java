@@ -27,4 +27,9 @@ public class DepartmentController {
     public DepartmentResponseDTO updateDepartment(@PathVariable("id") Long id, @RequestBody DepartmentRequestDTO departmentRequestDTO) {
         return departmentService.updateDepartment(id, departmentRequestDTO);
     }
+
+    @GetMapping("/mostExperienced")
+    public String getDepartmentWithMaxSum() {
+        return departmentService.getDepartmentWithMaxSum();
+    }
 }

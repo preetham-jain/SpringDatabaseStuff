@@ -22,4 +22,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     //by native query
     @Query(value = "SELECT * FROM employee e WHERE e.department_id = ?1", nativeQuery = true)
     List<Employee> getEmployeeListByNativeQuery(Long departmentId);
+
+    @Query(value = "SELECT * FROM Employee e", nativeQuery = true)
+    List<Employee> getAllEmployees();
 }

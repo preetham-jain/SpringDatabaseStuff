@@ -10,6 +10,7 @@ public class EmployeeResponseDTO {
     private Long id;
     private String name;
     private String code;
+    private int yearsOfExperience;
     private DepartmentResponseDTO department;
 
     public void setDepartmentFromEntity(Department department) {
