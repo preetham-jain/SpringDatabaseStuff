@@ -4,6 +4,8 @@ import com.example.springDataExample.dto.DepartmentRequestDTO;
 import com.example.springDataExample.dto.DepartmentResponseDTO;
 import com.example.springDataExample.entity.Department;
 
+import java.util.List;
+
 public interface DepartmentService {
     DepartmentResponseDTO createDepartment(DepartmentRequestDTO departmentRequestDTO);
 
@@ -11,5 +13,5 @@ public interface DepartmentService {
 
     DepartmentResponseDTO updateDepartment(Long id, DepartmentRequestDTO departmentRequestDTO);
 
-    String getDepartmentWithMaxSum();
+    List<DepartmentResponseDTO> getDepartmentWithMaxSum();
 }

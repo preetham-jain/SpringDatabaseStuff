@@ -2,6 +2,7 @@ package com.example.springDataExample.service.impl;
 
 import com.example.springDataExample.dto.DepartmentRequestDTO;
 import com.example.springDataExample.dto.DepartmentResponseDTO;
+import com.example.springDataExample.dto.EmployeeResponseDTO;
 import com.example.springDataExample.entity.Department;
 import com.example.springDataExample.entity.Employee;
 import com.example.springDataExample.repository.DepartmentRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,31 +68,41 @@ public class DepartmentServiceimpl implements DepartmentService {
     }
 
     @Override
-    public String getDepartmentWithMaxSum() {
-        List<Department> departmentList = departmentRepository.getAllDepartments();
+    public List<DepartmentResponseDTO> getDepartmentWithMaxSum() {
+        List<Department> departmentList = departmentRepository.getDepartmentsWithMaxSumOfYears();
 
-        int max = 0;
-        Long idWithMaxYears = null;
+        List<DepartmentResponseDTO> departmentResponseDTOS = new ArrayList<>();
         for (Department department: departmentList) {
-            List<Employee> employeeList = department.getEmployeeList();
-
-            int sum = 0;
-            for (Employee employee: employeeList) {
-                sum += employee.getYearsOfExperience();
-            }
-
-            if (sum > max) {
-                idWithMaxYears = department.getId();
-                max = sum;
-            }
+            DepartmentResponseDTO responseDTO = new DepartmentResponseDTO();
+            BeanUtils.copyProperties(department, responseDTO);
+            departmentResponseDTOS.add(responseDTO);
         }
+        return departmentResponseDTOS;
 
-        Optional<Department> department = departmentRepository.findById(idWithMaxYears);
-        if(department.isPresent()) {
-            String response = department.get().getName() + " with sum of: " + max;
-            return response;
-        }else {
-            return null;
-        }
+//        List<Department> departmentList = departmentRepository.getAllDepartments();
+//
+//        int max = 0;
+//        Long idWithMaxYears = null;
+//        for (Department department: departmentList) {
+//            List<Employee> employeeList = department.getEmployeeList();
+//
+//            int sum = 0;
+//            for (Employee employee: employeeList) {
+//                sum += employee.getYearsOfExperience();
+//            }
+//
+//            if (sum > max) {
+//                idWithMaxYears = department.getId();
+//                max = sum;
+//            }
+//        }
+//
+//        Optional<Department> department = departmentRepository.findById(idWithMaxYears);
+//        if(department.isPresent()) {
+//            String response = department.get().getName() + " with sum of: " + max;
+//            return response;
+//        }else {
+//            return null;
+//        }
     }
 }

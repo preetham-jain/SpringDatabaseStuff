@@ -7,6 +7,8 @@ import com.example.springDataExample.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
@@ -29,7 +31,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/mostExperienced")
-    public String getDepartmentWithMaxSum() {
+    public List<DepartmentResponseDTO> getDepartmentWithMaxSum() {
         return departmentService.getDepartmentWithMaxSum();
     }
 }
